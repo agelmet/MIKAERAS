@@ -1,0 +1,16 @@
+# MIKAERAS payment service (deployed once, separate from the shop).
+# Environment variables to add in the site settings:
+#   SHOP_URL            https://<shop address>          (where products.json lives, no trailing slash)
+#   STRIPE_SECRET_KEY   sk_live_...                      (her Stripe account)
+#   STRIPE_WEBHOOK_SECRET whsec_...                      (Stripe → Webhooks → checkout.session.completed → /.netlify/functions/stripe-webhook)
+#   GITHUB_TOKEN        fine-grained token, Contents: read & write on the shop repo (to lower stock after each sale)
+#   GITHUB_REPO         agelmet/MIKAERAS
+#   GITHUB_BRANCH       main
+#   RESEND_API_KEY      (optional) order e-mails
+#   ORDER_EMAIL         her e-mail for new-order notices
+#   FROM_EMAIL          e.g. MIKAERAS <orders@yourdomain.gr>
+[build]
+  publish = "public"
+[functions]
+  directory = "functions"
+  node_bundler = "esbuild"
