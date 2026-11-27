@@ -1,49 +1,435 @@
 {
-  "settings": {
-    "freeShipping": 69,
-    "shippingCost": 4,
-    "codFee": 2,
-    "announcement": "Δωρεάν αποστολή για αγορές άνω των 69€",
-    "email": "mikaerasproject@gmail.com",
-    "instagram": "https://www.instagram.com/mikaeras_/",
-    "tiktok": "https://www.tiktok.com/@mikaeras8"
+ "settings": {
+  "freeShipping": 69,
+  "shippingCost": 4,
+  "codFee": 2,
+  "email": "mikaerasproject@gmail.com",
+  "instagram": "https://www.instagram.com/mikaeras_/",
+  "tiktok": "https://www.tiktok.com/@mikaeras8",
+  "announcements": [
+   "Δωρεάν αποστολή για αγορές άνω των 69€",
+   "Νέα κομμάτια κάθε εβδομάδα — περιορισμένα τεμάχια",
+   "Επιστροφή ή αλλαγή μέσα σε 14 ημέρες"
+  ],
+  "payments": {
+   "mode": "checkout",
+   "card": true,
+   "cod": true,
+   "codFee": 2
   },
-  "products": [
-    {"id":"faux-fur-coat","name":"Γούνινο παλτό Ivory","tagline":"Elegance never gets cold.","category":"Πανωφόρια","price":89,"sale":null,"isNew":true,"active":true,
-     "desc":"Μακρύ παλτό από απαλή συνθετική γούνα σε ζεστό ιβουάρ, με γιακά που αγκαλιάζει και ζώνη στη μέση. Ντύνει το πιο απλό σύνολο και το κάνει βραδινό.",
-     "images":["img/coat-1.webp","img/coat-2.webp"],"sizes":[{"s":"S","q":1},{"s":"M","q":2},{"s":"L","q":1}]},
-    {"id":"sparkle-jumpsuit","name":"Ολόσωμη φόρμα Sparkle","tagline":"Made to sparkle.","category":"Ολόσωμες","price":59,"sale":null,"isNew":true,"active":true,
-     "desc":"Μαύρη ολόσωμη φόρμα με λαιμόκοψη halter και μπούστο με λεπτομέρειες που λάμπουν στο φως. Ψηλόμεσο, φαρδύ παντελόνι με πιέτες που μακραίνει τη σιλουέτα.",
-     "images":["img/jumpsuit-1.webp","img/jumpsuit-2.webp","img/jumpsuit-3.webp"],"sizes":[{"s":"S","q":2},{"s":"M","q":1},{"s":"L","q":0}]},
-    {"id":"satin-maxi-slip","name":"Σατέν maxi φόρεμα Noir","tagline":"A maxi dress, a whole mood.","category":"Φορέματα","price":54,"sale":null,"isNew":true,"active":true,
-     "desc":"Ρευστό σατέν φόρεμα μέχρι τον αστράγαλο, με λεπτές τιράντες και ανοιχτή πλάτη. Πέφτει μαλακά στο σώμα και κινείται μαζί σας.",
-     "images":["img/slip-1.webp","img/slip-2.webp"],"sizes":[{"s":"S","q":1},{"s":"M","q":1},{"s":"L","q":1}]},
-    {"id":"pleated-set","name":"Σετ πλισέ φούστα & top","tagline":"The perfect skirt and top combo.","category":"Σετ","price":49,"sale":null,"isNew":true,"active":true,
-     "desc":"Μαύρη πλισέ φούστα midi με ασορτί αμάνικο top. Φοριέται ως σετ ή χωριστά — με sneakers τη μέρα, με τακούνι το βράδυ.",
-     "images":["img/pleat-1.webp","img/pleat-2.webp"],"sizes":[{"s":"S","q":2},{"s":"M","q":2},{"s":"L","q":1}]},
-    {"id":"denim-mini","name":"Τζιν mini φόρεμα","tagline":"Always stylish in denim.","category":"Φορέματα","price":45,"sale":null,"isNew":false,"active":true,
-     "desc":"Σκούρο τζιν φόρεμα σε γραμμή Α με δομημένο μπούστο και ανοίγματα στην πλάτη. Το κομμάτι που φοράτε ξανά και ξανά.",
-     "images":["img/denim-1.webp","img/denim-2.webp"],"sizes":[{"s":"S","q":1},{"s":"M","q":0},{"s":"L","q":1}]},
-    {"id":"denim-maxi","name":"Τζιν maxi φόρεμα","tagline":"Get inspired in your denim dress.","category":"Φορέματα","price":52,"sale":null,"isNew":false,"active":true,
-     "desc":"Μακρύ φόρεμα σε βαθύ indigo τζιν, με εφαρμογή στο μπούστο και φούστα που ανοίγει απαλά. Για ηλιοβασιλέματα και καλοκαιρινά δείπνα.",
-     "images":["img/denimmaxi-1.webp","img/denimmaxi-2.webp"],"sizes":[{"s":"S","q":1},{"s":"M","q":1},{"s":"L","q":0}]},
-    {"id":"charcoal-suit","name":"Σετ κουστουμιού Charcoal","tagline":"Simplicity is never wrong.","category":"Σετ","price":79,"sale":null,"isNew":false,"active":true,
-     "desc":"Oversized σακάκι σε ανθρακί με ασορτί σορτς ή φαρδύ παντελόνι. Short or long — εσείς διαλέγετε. Δένει με ζώνη για πιο θηλυκή γραμμή.",
-     "images":["img/suit-1.webp","img/suit-2.webp","img/suit-3.webp"],"sizes":[{"s":"S","q":1},{"s":"M","q":2},{"s":"L","q":1}]},
-    {"id":"black-leather","name":"Σετ δερμάτινο Black","tagline":"Black leather. Unforgettable looks.","category":"Σετ","price":95,"sale":null,"isNew":false,"active":true,
-     "desc":"Δερμάτινο παντελόνι barrel με ψηλή μέση και ασορτί trench με ζώνη. Από οικολογικό δέρμα με απαλή υφή και βαρύ πέσιμο.",
-     "images":["img/leather-1.webp","img/leather-2.webp","img/leather-3.webp"],"sizes":[{"s":"S","q":1},{"s":"M","q":1},{"s":"L","q":1}]},
-    {"id":"olive-leather-set","name":"Σετ δερμάτινο Olive","tagline":"A set for every occasion.","category":"Σετ","price":69,"sale":null,"isNew":false,"active":true,
-     "desc":"Δερμάτινο top με peplum και ζώνη, μαζί με ασορτί σορτς σε βαθύ λαδί. Ένα σετ που φαίνεται ακριβό από μακριά.",
-     "images":["img/green-1.webp"],"sizes":[{"s":"S","q":0},{"s":"M","q":1},{"s":"L","q":0}]},
-    {"id":"ruffle-mini","name":"Mini φόρεμα με βολάν","tagline":"Main character energy.","category":"Φορέματα","price":49,"sale":null,"isNew":false,"active":true,
-     "desc":"Μαύρο mini φόρεμα με φουσκωτά μανίκια και κλος φούστα σε βολάν. Ρομαντικό και τολμηρό μαζί.",
-     "images":["img/ruffle-1.webp","img/ruffle-2.webp"],"sizes":[{"s":"S","q":2},{"s":"M","q":1},{"s":"L","q":1}]},
-    {"id":"mocha-shirt-skort","name":"Σετ πουκάμισο & φουστοπαντελόνο Mocha","tagline":"A new mood, a new look.","category":"Σετ","price":64,"sale":null,"isNew":false,"active":true,
-     "desc":"Σατινέ πουκάμισο σε σοκολατί με φιόγκο στον λαιμό και δερμάτινο φουστοπαντελόνο με ζώνη. Every era has its own outfit.",
-     "images":["img/brown-1.webp","img/brown-2.webp","img/brown-3.webp"],"sizes":[{"s":"S","q":1},{"s":"M","q":1},{"s":"L","q":1}]},
-    {"id":"corset-maxi","name":"Maxi φόρεμα με κορσέ","tagline":"A little extra, always.","category":"Φορέματα","price":62,"sale":null,"isNew":false,"active":true,
-     "desc":"Μαύρο μακρύ φόρεμα με μπούστο κορσέ, ντραπέ στη μέση και ψηλό άνοιγμα στο πόδι. A black dress for your extra moods.",
-     "images":["img/gown-1.webp","img/gown-2.webp","img/gown-3.webp"],"sizes":[{"s":"S","q":1},{"s":"M","q":2},{"s":"L","q":1}]}
-  ]
+  "sitewide": {
+   "active": false,
+   "percent": 20,
+   "ends": "",
+   "label": "Black Friday"
+  },
+  "qtyDiscount": {
+   "active": true,
+   "min": 2,
+   "percent": 10
+  },
+  "codes": [
+   {
+    "h": "22b0493861832fff303c27eb48a8c1436174fb13675ced0361a01ae698154379",
+    "hint": "WE•••••10",
+    "type": "percent",
+    "value": 10,
+    "min": 0,
+    "ends": "",
+    "active": true
+   }
+  ],
+  "api": "",
+  "legal": ""
+ },
+ "products": [
+  {
+   "id": "faux-fur-coat",
+   "name": "Γούνινο παλτό Ivory",
+   "tagline": "Elegance never gets cold.",
+   "category": "Πανωφόρια",
+   "price": 89,
+   "sale": null,
+   "isNew": true,
+   "active": true,
+   "desc": "Μακρύ παλτό από απαλή συνθετική γούνα σε ζεστό ιβουάρ, με γιακά που αγκαλιάζει και ζώνη στη μέση. Ντύνει το πιο απλό σύνολο και το κάνει βραδινό.",
+   "images": [
+    "img/coat-1.webp",
+    "img/coat-2.webp"
+   ],
+   "sizes": [
+    {
+     "s": "S",
+     "q": 1
+    },
+    {
+     "s": "M",
+     "q": 2
+    },
+    {
+     "s": "L",
+     "q": 1
+    }
+   ],
+   "stripeLink": "",
+   "saleEnds": "",
+   "badge": ""
+  },
+  {
+   "id": "sparkle-jumpsuit",
+   "name": "Ολόσωμη φόρμα Sparkle",
+   "tagline": "Made to sparkle.",
+   "category": "Ολόσωμες",
+   "price": 59,
+   "sale": null,
+   "isNew": true,
+   "active": true,
+   "desc": "Μαύρη ολόσωμη φόρμα με λαιμόκοψη halter και μπούστο με λεπτομέρειες που λάμπουν στο φως. Ψηλόμεσο, φαρδύ παντελόνι με πιέτες που μακραίνει τη σιλουέτα.",
+   "images": [
+    "img/jumpsuit-1.webp",
+    "img/jumpsuit-2.webp",
+    "img/jumpsuit-3.webp"
+   ],
+   "sizes": [
+    {
+     "s": "S",
+     "q": 2
+    },
+    {
+     "s": "M",
+     "q": 1
+    },
+    {
+     "s": "L",
+     "q": 0
+    }
+   ],
+   "stripeLink": "",
+   "saleEnds": "",
+   "badge": ""
+  },
+  {
+   "id": "satin-maxi-slip",
+   "name": "Σατέν maxi φόρεμα Noir",
+   "tagline": "A maxi dress, a whole mood.",
+   "category": "Φορέματα",
+   "price": 54,
+   "sale": null,
+   "isNew": true,
+   "active": true,
+   "desc": "Ρευστό σατέν φόρεμα μέχρι τον αστράγαλο, με λεπτές τιράντες και ανοιχτή πλάτη. Πέφτει μαλακά στο σώμα και κινείται μαζί σας.",
+   "images": [
+    "img/slip-1.webp",
+    "img/slip-2.webp"
+   ],
+   "sizes": [
+    {
+     "s": "S",
+     "q": 1
+    },
+    {
+     "s": "M",
+     "q": 1
+    },
+    {
+     "s": "L",
+     "q": 1
+    }
+   ],
+   "stripeLink": "",
+   "saleEnds": "",
+   "badge": ""
+  },
+  {
+   "id": "pleated-set",
+   "name": "Σετ πλισέ φούστα & top",
+   "tagline": "The perfect skirt and top combo.",
+   "category": "Σετ",
+   "price": 49,
+   "sale": null,
+   "isNew": true,
+   "active": true,
+   "desc": "Μαύρη πλισέ φούστα midi με ασορτί αμάνικο top. Φοριέται ως σετ ή χωριστά — με sneakers τη μέρα, με τακούνι το βράδυ.",
+   "images": [
+    "img/pleat-1.webp",
+    "img/pleat-2.webp"
+   ],
+   "sizes": [
+    {
+     "s": "S",
+     "q": 2
+    },
+    {
+     "s": "M",
+     "q": 2
+    },
+    {
+     "s": "L",
+     "q": 1
+    }
+   ],
+   "stripeLink": "",
+   "saleEnds": "",
+   "badge": ""
+  },
+  {
+   "id": "denim-mini",
+   "name": "Τζιν mini φόρεμα",
+   "tagline": "Always stylish in denim.",
+   "category": "Φορέματα",
+   "price": 45,
+   "sale": null,
+   "isNew": false,
+   "active": true,
+   "desc": "Σκούρο τζιν φόρεμα σε γραμμή Α με δομημένο μπούστο και ανοίγματα στην πλάτη. Το κομμάτι που φοράτε ξανά και ξανά.",
+   "images": [
+    "img/denim-1.webp",
+    "img/denim-2.webp"
+   ],
+   "sizes": [
+    {
+     "s": "S",
+     "q": 1
+    },
+    {
+     "s": "M",
+     "q": 0
+    },
+    {
+     "s": "L",
+     "q": 1
+    }
+   ],
+   "stripeLink": "",
+   "saleEnds": "",
+   "badge": ""
+  },
+  {
+   "id": "denim-maxi",
+   "name": "Τζιν maxi φόρεμα",
+   "tagline": "Get inspired in your denim dress.",
+   "category": "Φορέματα",
+   "price": 52,
+   "sale": null,
+   "isNew": false,
+   "active": true,
+   "desc": "Μακρύ φόρεμα σε βαθύ indigo τζιν, με εφαρμογή στο μπούστο και φούστα που ανοίγει απαλά. Για ηλιοβασιλέματα και καλοκαιρινά δείπνα.",
+   "images": [
+    "img/denimmaxi-1.webp",
+    "img/denimmaxi-2.webp"
+   ],
+   "sizes": [
+    {
+     "s": "S",
+     "q": 1
+    },
+    {
+     "s": "M",
+     "q": 1
+    },
+    {
+     "s": "L",
+     "q": 0
+    }
+   ],
+   "stripeLink": "",
+   "saleEnds": "",
+   "badge": ""
+  },
+  {
+   "id": "charcoal-suit",
+   "name": "Σετ κουστουμιού Charcoal",
+   "tagline": "Simplicity is never wrong.",
+   "category": "Σετ",
+   "price": 79,
+   "sale": null,
+   "isNew": false,
+   "active": true,
+   "desc": "Oversized σακάκι σε ανθρακί με ασορτί σορτς ή φαρδύ παντελόνι. Short or long — εσείς διαλέγετε. Δένει με ζώνη για πιο θηλυκή γραμμή.",
+   "images": [
+    "img/suit-1.webp",
+    "img/suit-2.webp",
+    "img/suit-3.webp"
+   ],
+   "sizes": [
+    {
+     "s": "S",
+     "q": 1
+    },
+    {
+     "s": "M",
+     "q": 2
+    },
+    {
+     "s": "L",
+     "q": 1
+    }
+   ],
+   "stripeLink": "",
+   "saleEnds": "",
+   "badge": ""
+  },
+  {
+   "id": "black-leather",
+   "name": "Σετ δερμάτινο Black",
+   "tagline": "Black leather. Unforgettable looks.",
+   "category": "Σετ",
+   "price": 95,
+   "sale": null,
+   "isNew": false,
+   "active": true,
+   "desc": "Δερμάτινο παντελόνι barrel με ψηλή μέση και ασορτί trench με ζώνη. Από οικολογικό δέρμα με απαλή υφή και βαρύ πέσιμο.",
+   "images": [
+    "img/leather-1.webp",
+    "img/leather-2.webp",
+    "img/leather-3.webp"
+   ],
+   "sizes": [
+    {
+     "s": "S",
+     "q": 1
+    },
+    {
+     "s": "M",
+     "q": 1
+    },
+    {
+     "s": "L",
+     "q": 1
+    }
+   ],
+   "stripeLink": "",
+   "saleEnds": "",
+   "badge": ""
+  },
+  {
+   "id": "olive-leather-set",
+   "name": "Σετ δερμάτινο Olive",
+   "tagline": "A set for every occasion.",
+   "category": "Σετ",
+   "price": 69,
+   "sale": null,
+   "isNew": false,
+   "active": true,
+   "desc": "Δερμάτινο top με peplum και ζώνη, μαζί με ασορτί σορτς σε βαθύ λαδί. Ένα σετ που φαίνεται ακριβό από μακριά.",
+   "images": [
+    "img/green-1.webp"
+   ],
+   "sizes": [
+    {
+     "s": "S",
+     "q": 0
+    },
+    {
+     "s": "M",
+     "q": 1
+    },
+    {
+     "s": "L",
+     "q": 0
+    }
+   ],
+   "stripeLink": "",
+   "saleEnds": "",
+   "badge": ""
+  },
+  {
+   "id": "ruffle-mini",
+   "name": "Mini φόρεμα με βολάν",
+   "tagline": "Main character energy.",
+   "category": "Φορέματα",
+   "price": 49,
+   "sale": null,
+   "isNew": false,
+   "active": true,
+   "desc": "Μαύρο mini φόρεμα με φουσκωτά μανίκια και κλος φούστα σε βολάν. Ρομαντικό και τολμηρό μαζί.",
+   "images": [
+    "img/ruffle-1.webp",
+    "img/ruffle-2.webp"
+   ],
+   "sizes": [
+    {
+     "s": "S",
+     "q": 2
+    },
+    {
+     "s": "M",
+     "q": 1
+    },
+    {
+     "s": "L",
+     "q": 1
+    }
+   ],
+   "stripeLink": "",
+   "saleEnds": "",
+   "badge": ""
+  },
+  {
+   "id": "mocha-shirt-skort",
+   "name": "Σετ πουκάμισο & φουστοπαντελόνο Mocha",
+   "tagline": "A new mood, a new look.",
+   "category": "Σετ",
+   "price": 64,
+   "sale": null,
+   "isNew": false,
+   "active": true,
+   "desc": "Σατινέ πουκάμισο σε σοκολατί με φιόγκο στον λαιμό και δερμάτινο φουστοπαντελόνο με ζώνη. Every era has its own outfit.",
+   "images": [
+    "img/brown-1.webp",
+    "img/brown-2.webp",
+    "img/brown-3.webp"
+   ],
+   "sizes": [
+    {
+     "s": "S",
+     "q": 1
+    },
+    {
+     "s": "M",
+     "q": 1
+    },
+    {
+     "s": "L",
+     "q": 1
+    }
+   ],
+   "stripeLink": "",
+   "saleEnds": "",
+   "badge": ""
+  },
+  {
+   "id": "corset-maxi",
+   "name": "Maxi φόρεμα με κορσέ",
+   "tagline": "A little extra, always.",
+   "category": "Φορέματα",
+   "price": 62,
+   "sale": null,
+   "isNew": false,
+   "active": true,
+   "desc": "Μαύρο μακρύ φόρεμα με μπούστο κορσέ, ντραπέ στη μέση και ψηλό άνοιγμα στο πόδι. A black dress for your extra moods.",
+   "images": [
+    "img/gown-1.webp",
+    "img/gown-2.webp",
+    "img/gown-3.webp"
+   ],
+   "sizes": [
+    {
+     "s": "S",
+     "q": 1
+    },
+    {
+     "s": "M",
+     "q": 2
+    },
+    {
+     "s": "L",
+     "q": 1
+    }
+   ],
+   "stripeLink": "",
+   "saleEnds": "",
+   "badge": ""
+  }
+ ]
 }
