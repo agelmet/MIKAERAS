@@ -28,7 +28,7 @@ export function unitPrice(p, s) {
   if (sw && sw.active && live(sw.ends) && sw.percent > 0) return r2(p.price * (100 - sw.percent) / 100);
   return p.price;
 }
-const sha = (t) => crypto.createHash('sha256').update(t).digest('hex');
+const sha = (t) => crypto.pbkdf2Sync(t, 'mikaeras-codes-v1', 150000, 32, 'sha256').toString('hex');
 
 /* Same rules as the shop page. Prices always come from products.json, never from the browser. */
 export function price(data, order) {

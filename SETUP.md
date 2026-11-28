@@ -14,3 +14,8 @@ From then on: card payments for the whole cart (discounts + shipping recalculate
 
 ## Publishing key for the owner's phone
 GitHub → Settings → Developer settings → Fine-grained token → only this repo → Contents: Read and write. Paste it once in the admin when it asks.
+
+## Notes (v4)
+- Discount codes are stored as slow salted hashes (PBKDF2). The shop page, the admin and `api/lib/shop.mjs` must use the same function.
+- The admin reads the newest `products.json` straight from the repo once the publishing key is set, and keeps unpublished photos in the phone's IndexedDB.
+- The admin can be added to the phone's home screen (`admin.webmanifest`).

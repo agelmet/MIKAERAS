@@ -1,0 +1,23 @@
+{
+ "name": "MIKAERAS · Διαχείριση",
+ "short_name": "MIKAERAS",
+ "start_url": "admin.html",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#f4efe8",
+ "theme_color": "#f4efe8",
+ "lang": "el",
+ "icons": [
+  {
+   "src": "apple-touch-icon.png",
+   "sizes": "180x180",
+   "type": "image/png"
+  },
+  {
+   "src": "img/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  }
+ ]
+}
