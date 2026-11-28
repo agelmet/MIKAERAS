@@ -88,6 +88,7 @@ h1{font-family:'NSD',serif;font-weight:300;font-size:32px;line-height:1.1;margin
 .seg{display:flex;gap:4px;background:var(--cream);padding:4px;border-radius:12px}
 .seg button{flex:1;height:40px;border-radius:9px;font-size:12.5px;font-weight:600;color:var(--mocha)}
 .seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 6px -3px rgba(0,0,0,.25)}
+.shm{border-top:1px solid rgba(58,48,41,.08);padding-top:10px;margin-top:6px}
 .code{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(58,48,41,.08)}
 .code:last-child{border-bottom:0}
 .code b{font-size:14px;letter-spacing:.06em}
@@ -255,6 +256,8 @@ function gate(){
 function normalize(d){
   d.settings=d.settings||{}; const s=d.settings;
   s.payments=s.payments||{mode:'checkout',card:true,cod:true,codFee:2};
+  if(s.payments.iris===undefined){s.payments.iris=true;s.payments.irisId=s.payments.irisId||'';s.payments.irisName=s.payments.irisName||''}
+  if(!Array.isArray(s.shippingMethods)||!s.shippingMethods.length)s.shippingMethods=[{id:'boxnow',name:'BOX NOW',note:'Παραλαβή από αυτόματη θυρίδα, όποτε σας βολεύει',price:2.99,days:'2–5',active:true},{id:'fedex',name:'FedEx',note:'Παράδοση στην πόρτα σας',price:2.99,days:'2–5',active:true}];
   s.sitewide=s.sitewide||{active:false,percent:20,ends:'',label:'Προσφορά'};
   s.qtyDiscount=s.qtyDiscount||{active:false,min:2,percent:10};
   s.codes=s.codes||[]; s.announcements=s.announcements||[];
@@ -482,9 +485,18 @@ function paneDiscounts(){
 function paneSettings(){
   const s=D.settings, pay=s.payments;
   $('#pane').innerHTML=`
-  <div class="box"><h3>Αποστολή</h3><div class="two"><div class="f"><label for="s1">Δωρεάν αποστολή από (€)</label><input type="number" inputmode="decimal" id="s1" value="${s.freeShipping??69}"></div><div class="f"><label for="s2">Κόστος αποστολής (€)</label><input type="number" inputmode="decimal" id="s2" value="${s.shippingCost??4}"></div></div></div>
+  <div class="box"><h3>Αποστολή</h3><div class="d">Ο πελάτης διαλέγει τρόπο αποστολής στο καλάθι.</div>
+   <div class="f"><label for="s1">Δωρεάν αποστολή από (€)</label><input type="number" inputmode="decimal" id="s1" value="${s.freeShipping??69}"></div>
+   ${s.shippingMethods.map((m,k)=>`<div class="shm"><div class="tg" style="padding-top:4px"><div><b>${esc(m.name||'Νέος τρόπος')}</b><span>${eur(m.price)} · ${esc(m.days||'')} εργάσιμες</span></div>${swH('smA'+k,m.active!==false)}</div>
+    <div class="two"><div class="f"><label>Όνομα</label><input data-sm="${k}" data-k="name" value="${esc(m.name||'')}" placeholder="π.χ. BOX NOW"></div><div class="f"><label>Κόστος (€)</label><input data-sm="${k}" data-k="price" type="number" inputmode="decimal" step="0.01" value="${m.price??''}"></div></div>
+    <div class="two"><div class="f"><label>Ημέρες παράδοσης</label><input data-sm="${k}" data-k="days" value="${esc(m.days||'')}" placeholder="π.χ. 2–5"></div><div class="f"><label>Σύντομη περιγραφή</label><input data-sm="${k}" data-k="note" value="${esc(m.note||'')}" placeholder="π.χ. στην πόρτα σας"></div></div>
+    ${s.shippingMethods.length>1?`<button class="del" data-smr="${k}">Αφαίρεση</button>`:''}</div>`).join('')}
+   <button class="link-btn" id="smAdd">+ Προσθήκη τρόπου αποστολής</button></div>
   <div class="box"><h3>Πληρωμές</h3>
    <div class="tg"><div><b>Κάρτα · Apple Pay · Google Pay</b><span>Μέσω του λογαριασμού σας στο Stripe</span></div>${swH('pC',pay.card)}</div>
+   <div class="tg"><div><b>IRIS</b><span>Υποχρεωτικό από τον νόμο · ο πελάτης πληρώνει από την εφαρμογή της τράπεζάς του</span></div>${swH('pI',pay.iris)}</div>
+   <div class="two" style="margin:2px 0 6px"><div class="f"><label for="pIid">ΑΦΜ ή κινητό IRIS</label><input id="pIid" inputmode="numeric" value="${esc(pay.irisId||'')}" placeholder="π.χ. 123456789"></div><div class="f"><label for="pIn">Όνομα δικαιούχου</label><input id="pIn" value="${esc(pay.irisName||'')}" placeholder="όπως στην τράπεζα"></div></div>
+   <div class="small" style="margin:-4px 0 8px">Ενεργοποιείται μία φορά από το e-banking της τράπεζάς σας (IRIS για επιχειρήσεις). Οι παραγγελίες IRIS φτάνουν με email ως «αναμονή πληρωμής» — στείλτε τες μόλις δείτε τα χρήματα.</div>
    <div class="tg"><div><b>Αντικαταβολή</b><span>Ο πελάτης πληρώνει τον courier</span></div>${swH('pD',pay.cod)}</div>
    <div class="f" style="margin-top:6px"><label for="pF">Επιβάρυνση αντικαταβολής (€)</label><input id="pF" type="number" inputmode="decimal" value="${pay.codFee??0}"></div>
    <div class="f"><label>Πώς πληρώνει ο πελάτης με κάρτα</label><div class="seg" id="pM"><button data-m="checkout" class="${pay.mode!=='links'?'on':''}">Όλο το καλάθι μαζί</button><button data-m="links" class="${pay.mode==='links'?'on':''}">Stripe link ανά προϊόν</button></div><div class="small">«Όλο το καλάθι μαζί» = προτείνεται: ο πελάτης πληρώνει όλα τα κομμάτια με μία πληρωμή, με τις εκπτώσεις και την αποστολή υπολογισμένες. «Stripe link ανά προϊόν» = χρησιμοποιεί τα links που βάζετε σε κάθε προϊόν.</div></div>
@@ -493,9 +505,16 @@ function paneSettings(){
   <div class="box"><h3>Στοιχεία καταστήματος</h3><div class="f"><label for="s5">Email παραγγελιών & επικοινωνίας</label><input id="s5" type="email" value="${esc(s.email||'')}"></div><div class="f"><label for="s6">Στοιχεία επιχείρησης (για τους όρους)</label><textarea id="s6" placeholder="Επωνυμία, ΑΦΜ, ΔΟΥ, διεύθυνση — τα ζητά ο νόμος για τα e-shop">${esc(s.legal||'')}</textarea></div></div>
   <div class="box"><h3>Συσκευή</h3><div class="d">Αν κάτι μπερδευτεί, ακυρώστε όσες αλλαγές δεν έχετε δημοσιεύσει.</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="pill" id="reset">Ακύρωση αλλαγών</button><button class="pill" id="unkey">Αποσύνδεση δημοσίευσης</button><button class="pill" id="logout">Έξοδος</button></div></div>`;
   const num=(id,fn)=>$('#'+id).oninput=e=>{fn(+e.target.value||0);save()};
-  num('s1',v=>s.freeShipping=v); num('s2',v=>s.shippingCost=v); num('pF',v=>pay.codFee=v);
-  $('#pC').onchange=e=>{pay.card=e.target.checked;if(!pay.card&&!pay.cod){pay.cod=true;$('#pD').checked=true;toast('Χρειάζεται τουλάχιστον ένας τρόπος πληρωμής')}save()};
-  $('#pD').onchange=e=>{pay.cod=e.target.checked;if(!pay.card&&!pay.cod){pay.card=true;$('#pC').checked=true;toast('Χρειάζεται τουλάχιστον ένας τρόπος πληρωμής')}save()};
+  num('s1',v=>s.freeShipping=v); num('pF',v=>pay.codFee=v);
+  const one=()=>['card','iris','cod'].some(k=>pay[k]);
+  $('#pI').onchange=e=>{pay.iris=e.target.checked;if(!one()){pay.iris=true;e.target.checked=true;toast('Χρειάζεται τουλάχιστον ένας τρόπος πληρωμής')}else if(!pay.iris)toast('Προσοχή: ο νόμος ζητά να δέχεστε IRIS');save()};
+  $('#pIid').oninput=e=>{pay.irisId=e.target.value.trim();save()}; $('#pIn').oninput=e=>{pay.irisName=e.target.value.trim();save()};
+  $$('[data-sm]').forEach(i=>i.oninput=e=>{const m=s.shippingMethods[+i.dataset.sm],k=i.dataset.k;m[k]=k==='price'?(+e.target.value||0):e.target.value;if(k==='name')m.id=m.id||slug(m.name);s.shippingCost=Math.min(...s.shippingMethods.filter(x=>x.active!==false).map(x=>+x.price||0));save()});
+  s.shippingMethods.forEach((m,k)=>{$('#smA'+k).onchange=e=>{m.active=e.target.checked;if(!s.shippingMethods.some(x=>x.active!==false)){m.active=true;e.target.checked=true;toast('Χρειάζεται τουλάχιστον ένας τρόπος αποστολής')}save()}});
+  $$('[data-smr]').forEach(b=>b.onclick=()=>modal('Αφαίρεση τρόπου αποστολής;',`Ο τρόπος «${esc(s.shippingMethods[+b.dataset.smr].name)}» δεν θα εμφανίζεται πια στο καλάθι.`,'Αφαίρεση','Άκυρο',()=>{s.shippingMethods.splice(+b.dataset.smr,1);save();render()}));
+  $('#smAdd').onclick=()=>{s.shippingMethods.push({id:'ship-'+Date.now().toString(36),name:'',note:'',price:2.99,days:'2–5',active:true});save();render();const L=$$('[data-k=name]');L[L.length-1].focus()};
+  $('#pC').onchange=e=>{pay.card=e.target.checked;if(!one()){pay.card=true;e.target.checked=true;toast('Χρειάζεται τουλάχιστον ένας τρόπος πληρωμής')}save()};
+  $('#pD').onchange=e=>{pay.cod=e.target.checked;if(!one()){pay.cod=true;e.target.checked=true;toast('Χρειάζεται τουλάχιστον ένας τρόπος πληρωμής')}save()};
   $$('#pM button').forEach(b=>b.onclick=()=>{pay.mode=b.dataset.m;$$('#pM button').forEach(x=>x.classList.toggle('on',x===b));save()});
   $('#pA').oninput=e=>{s.api=e.target.value.trim();save()};
   $$('[data-an]').forEach(i=>i.oninput=e=>{s.announcements[+i.dataset.an]=e.target.value;save()});

@@ -36,7 +36,8 @@ export default async (req) => {
       params['discounts[0][coupon]'] = cp.id;
     }
     params['shipping_options[0][shipping_rate_data][type]'] = 'fixed_amount';
-    params['shipping_options[0][shipping_rate_data][display_name]'] = t.ship ? 'Αποστολή με courier' : 'Δωρεάν αποστολή';
+    params['shipping_options[0][shipping_rate_data][display_name]'] = (t.ship ? '' : 'Δωρεάν · ') + t.shipName;
+    params['metadata[ship]'] = t.shipName + (c.locker ? ' — θυρίδα: ' + c.locker : '');
     params['shipping_options[0][shipping_rate_data][fixed_amount][amount]'] = Math.round(t.ship * 100);
     params['shipping_options[0][shipping_rate_data][fixed_amount][currency]'] = 'eur';
     const s = await stripe('checkout/sessions', params);

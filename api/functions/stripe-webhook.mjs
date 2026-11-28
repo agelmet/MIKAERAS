@@ -12,7 +12,7 @@ export default async (req) => {
     let to = env('ORDER_EMAIL'); if (!to) { try { to = (await loadShop()).settings.email; } catch {} }
     const total = ((s.amount_total || 0) / 100).toFixed(2);
     const lines = items.map((i) => `${i.q} × ${i.id} (${i.s})`).join('\n');
-    await mail(to, `Νέα παραγγελία (κάρτα, πληρώθηκε) — ${total}€`, `${lines}\n\nΣύνολο: ${total}€\n${m.customer || ''}\n${s.customer_details && s.customer_details.email || ''}${m.note ? '\nΣημείωση: ' + m.note : ''}`);
+    await mail(to, `Νέα παραγγελία (κάρτα, πληρώθηκε) — ${total}€`, `${lines}\n\nΣύνολο: ${total}€\n${m.customer || ''}\n${s.customer_details && s.customer_details.email || ''}${m.ship ? '\nΑποστολή: ' + m.ship : ''}${m.note ? '\nΣημείωση: ' + m.note : ''}`);
   }
   return new Response('ok');
 };

@@ -61,14 +61,18 @@ export function price(data, order) {
     }
   }
   const after = Math.max(0, r2(sub - auto - codeAmt));
-  const ship = after >= (s.freeShipping ?? 69) || freeShip ? 0 : (s.shippingCost ?? 4);
+  const methods = (s.shippingMethods || []).filter((m) => m.active !== false);
+  const sm = methods.find((m) => m.id === order.ship) || methods[0] || { id: 'std', name: 'Αποστολή', price: s.shippingCost ?? 4 };
+  const ship = after >= (s.freeShipping ?? 69) || freeShip ? 0 : (+sm.price || 0);
   const cod = order.pay === 'cod' ? ((s.payments && s.payments.codFee) || 0) : 0;
-  return { lines, sub, discount: r2(auto + codeAmt), labels, ship, cod, total: r2(after + ship + cod), settings: s };
+  return { lines, sub, discount: r2(auto + codeAmt), labels, ship, shipName: sm.name, shipId: sm.id, cod, total: r2(after + ship + cod), settings: s };
 }
+
+export const orderId = () => 'MK' + Date.now().toString(36).toUpperCase().slice(-6);
 
 export function summary(t, customer = {}) {
   const L = t.lines.map((l) => `${l.q} × ${l.p.name} (${l.s}) — ${(l.unit * l.q).toFixed(2)}€`).join('\n');
-  return `${L}\nΈκπτωση: −${t.discount.toFixed(2)}€ ${t.labels.join(', ')}\nΑποστολή: ${t.ship.toFixed(2)}€${t.cod ? `\nΑντικαταβολή: ${t.cod.toFixed(2)}€` : ''}\nΣΥΝΟΛΟ: ${t.total.toFixed(2)}€\n\n${customer.name || ''}\n${customer.phone || ''} · ${customer.email || ''}\n${customer.addr || ''}, ${customer.city || ''} ${customer.zip || ''}${customer.note ? `\nΣημείωση: ${customer.note}` : ''}`;
+  return `${L}\nΈκπτωση: −${t.discount.toFixed(2)}€ ${t.labels.join(', ')}\nΑποστολή (${t.shipName}): ${t.ship.toFixed(2)}€${t.cod ? `\nΑντικαταβολή: ${t.cod.toFixed(2)}€` : ''}\nΣΥΝΟΛΟ: ${t.total.toFixed(2)}€\n\n${customer.name || ''}\n${customer.phone || ''} · ${customer.email || ''}\n${customer.addr || ''}, ${customer.city || ''} ${customer.zip || ''}${customer.locker ? `\nΘυρίδα BOX NOW: ${customer.locker}` : ''}${customer.note ? `\nΣημείωση: ${customer.note}` : ''}`;
 }
 
 /* Lower stock in products.json on GitHub (the shop updates itself in about a minute, at no cost). */

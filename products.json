@@ -1,21 +1,24 @@
 {
  "settings": {
   "freeShipping": 69,
-  "shippingCost": 4,
+  "shippingCost": 2.99,
   "codFee": 2,
   "email": "mikaerasproject@gmail.com",
   "instagram": "https://www.instagram.com/mikaeras_/",
   "tiktok": "https://www.tiktok.com/@mikaeras8",
   "announcements": [
-   "Δωρεάν αποστολή για αγορές άνω των 69€",
+   "Δωρεάν αποστολή για αγορές άνω των 69€ · BOX NOW ή FedEx 2,99€",
    "Νέα κομμάτια κάθε εβδομάδα — περιορισμένα τεμάχια",
-   "Επιστροφή ή αλλαγή μέσα σε 14 ημέρες"
+   "Πληρωμή με κάρτα, IRIS ή αντικαταβολή"
   ],
   "payments": {
    "mode": "checkout",
    "card": true,
    "cod": true,
-   "codFee": 2
+   "codFee": 2,
+   "iris": true,
+   "irisId": "",
+   "irisName": ""
   },
   "sitewide": {
    "active": false,
@@ -40,7 +43,25 @@
    }
   ],
   "api": "",
-  "legal": ""
+  "legal": "",
+  "shippingMethods": [
+   {
+    "id": "boxnow",
+    "name": "BOX NOW",
+    "note": "Παραλαβή από αυτόματη θυρίδα, όποτε σας βολεύει",
+    "price": 2.99,
+    "days": "2–5",
+    "active": true
+   },
+   {
+    "id": "fedex",
+    "name": "FedEx",
+    "note": "Παράδοση στην πόρτα σας",
+    "price": 2.99,
+    "days": "2–5",
+    "active": true
+   }
+  ]
  },
  "products": [
   {

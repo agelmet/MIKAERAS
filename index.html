@@ -483,6 +483,20 @@ footer .shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180
 .pay-opt b{display:block;font-size:13.5px}
 .pay-opt span{font-size:12px;color:var(--mocha)}
 .pay-opt:has(input:checked){border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.fld label.pay-opt{display:flex;text-transform:none;letter-spacing:0;font-size:13.5px;font-weight:400;color:var(--ink);margin-bottom:0}
+.pay-opt div{flex:1;min-width:0}
+.pay-opt .pr{font-weight:600;font-size:13.5px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pay-opt .pr s{color:var(--taupe);font-weight:400;margin-right:4px}
+.iris-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.08em;background:#0b3d91;color:#fff;border-radius:5px;padding:2px 6px;margin-right:6px;vertical-align:1px}
+.locker{display:none;margin-top:8px}
+.locker.on{display:block}
+.irisbox{margin:22px auto 0;max-width:360px;text-align:left;background:#fff;border:1px solid rgba(58,48,41,.14);border-radius:18px;padding:18px}
+.irisbox h4{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mocha);margin-bottom:10px}
+.irisbox ol{margin:0 0 12px 18px;font-size:13.5px;line-height:1.6;color:#4a3f36}
+.irow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid rgba(58,48,41,.08);font-size:13px}
+.irow span{color:var(--mocha)}
+.irow b{font-size:14.5px;letter-spacing:.02em;text-align:right;word-break:break-all}
+.irow button{flex:0 0 auto;height:34px;padding:0 12px;border-radius:999px;border:1px solid rgba(23,19,16,.2);font-size:11px;font-weight:600}
 .demo{margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--sand);font-size:12px;color:var(--cocoa);line-height:1.55}
 .back{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;display:flex;align-items:center;gap:6px;margin:4px 0}
 .done{text-align:center;padding:50px 10px}
@@ -760,7 +774,7 @@ footer .shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180
   <div class="promise rv-tilt">
     <div><svg viewBox="0 0 32 32"><path d="M3 9h17v13H3zM20 13h5l4 4v5h-9"/><circle cx="8" cy="23.5" r="2.5"/><circle cx="24" cy="23.5" r="2.5"/></svg><b>Δωρεάν αποστολή</b><span id="prShip">Για αγορές άνω των 69€, σε όλη την Ελλάδα</span></div>
     <div><svg viewBox="0 0 32 32"><path d="M6 12a10 10 0 1 1 1.5 9.5"/><path d="M6 5v7h7"/></svg><b>Επιστροφή σε 14 ημέρες</b><span>Αλλάξατε γνώμη; Το επιστρέφετε εύκολα</span></div>
-    <div><svg viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="17" rx="3"/><path d="M4 13h24M9 20h5"/></svg><b>Ασφαλής πληρωμή</b><span>Κάρτα, Apple Pay ή Google Pay</span></div>
+    <div><svg viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="17" rx="3"/><path d="M4 13h24M9 20h5"/></svg><b>Ασφαλής πληρωμή</b><span>Κάρτα, IRIS, Apple Pay ή Google Pay</span></div>
     <div><svg viewBox="0 0 32 32"><path d="M5 11l11-6 11 6v10l-11 6-11-6z"/><path d="M5 11l11 6 11-6M16 17v10"/></svg><b>Αντικαταβολή</b><span>Πληρώνετε όταν το παραλάβετε</span></div>
   </div>
 </section>
@@ -791,7 +805,7 @@ footer .shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180
       <div><h4>Νομικά</h4><button data-legal="terms">Όροι χρήσης</button><button data-legal="privacy">Απόρρητο & cookies</button></div>
     </div>
     <div class="f-bot">
-      <div class="paym"><span>VISA</span><span>Mastercard</span><span>Apple Pay</span><span>Google Pay</span><span>Αντικαταβολή</span></div>
+      <div class="paym"><span>VISA</span><span>Mastercard</span><span>Apple Pay</span><span>Google Pay</span><span>IRIS</span><span>Αντικαταβολή</span></div>
       <span>© <span id="yr"></span> MIKAERAS</span>
       <span class="credit">Designed by <a href="https://advonmedia.com" target="_blank" rel="noopener">Advon Media</a></span>
     </div>
@@ -893,6 +907,12 @@ const qOf=(p,s)=>+((p.sizes||[]).find(z=>z.s===s)||{}).q||0;
 function priceHTML(p){const u=unitPrice(p);return u<p.price?`<s>${eur(p.price)}</s><span class="now">${eur(u)}</span>`:eur(p.price)}
 async function sha(t){const e=new TextEncoder(),k=await crypto.subtle.importKey('raw',e.encode(t),'PBKDF2',false,['deriveBits']);const b=await crypto.subtle.deriveBits({name:'PBKDF2',salt:e.encode('mikaeras-codes-v1'),iterations:150000,hash:'SHA-256'},k,256);return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 function lines(){return bag.map(i=>({...i,p:P.find(p=>p.id===i.id)})).filter(l=>l.p&&qOf(l.p,l.s)>0)}
+const DEF_SHIP=[{id:'boxnow',name:'BOX NOW',note:'Παραλαβή από αυτόματη θυρίδα, όποτε σας βολεύει',price:2.99,days:'2–5',active:true},{id:'fedex',name:'FedEx',note:'Παράδοση στην πόρτα σας',price:2.99,days:'2–5',active:true}];
+const shipMethods=()=>{const m=(S().shippingMethods||DEF_SHIP).filter(x=>x.active!==false);return m.length?m:DEF_SHIP};
+let shipId=store.get('mk_ship','');
+const curShip=()=>{const m=shipMethods();return m.find(x=>x.id===shipId)||m[0]};
+const minShip=()=>Math.min(...shipMethods().map(x=>+x.price||0));
+const shipDays=()=>{const d=[...new Set(shipMethods().map(x=>x.days).filter(Boolean))];return d.length===1?d[0]:'2–5'};
 function totals(pay){
   const s=S(), L=lines();
   const items=L.reduce((a,l)=>a+l.q,0);
@@ -910,9 +930,9 @@ function totals(pay){
   }
   const after=Math.max(0,sub-auto-codeAmt);
   const free=s.freeShipping??69;
-  const ship=items===0||after>=free||freeShipCode?0:(s.shippingCost??4);
+  const sm=curShip(); const shipFree=after>=free||freeShipCode; const ship=items===0||shipFree?0:(+sm.price||0);
   const cod=pay==='cod'?((s.payments&&s.payments.codFee)??0):0;
-  return{items,full,sub,auto,autoLabel,codeAmt,codeLabel,codeErr,freeShipCode,after,ship,cod,free,total:after+ship+cod,saved:full-sub+auto+codeAmt};
+  return{items,full,sub,auto,autoLabel,codeAmt,codeLabel,codeErr,freeShipCode,after,ship,shipFree,shipName:sm.name,cod,free,total:after+ship+cod,saved:full-sub+auto+codeAmt};
 }
 
 /* ---------- overlays: one stack, one scroll lock ---------- */
@@ -1209,7 +1229,7 @@ function drawInfo(){
    <div class="notify" id="notify"><input type="email" id="nMail" placeholder="Το email σας" autocomplete="email"><button id="nGo">Ενημερώστε με</button></div>
    <div class="qtyrow" id="qtyRow"><div class="qty"><button data-qd="-1" aria-label="Λιγότερα">−</button><span id="qN">${curQty}</span><button data-qd="1" aria-label="Περισσότερα">+</button></div></div>
    <p class="pd-desc">${esc(p.desc||'')}</p>
-   <div class="acc"><details><summary>Αποστολή & παράδοση</summary><p>Αποστολή σε 1–3 εργάσιμες σε όλη την Ελλάδα. Δωρεάν για αγορές άνω των ${eur(S().freeShipping??69)}${S().payments&&S().payments.cod?' · Δυνατότητα αντικαταβολής':''}.</p></details>
+   <div class="acc"><details><summary>Αποστολή & παράδοση</summary><p>Αποστολή σε ${shipDays()} εργάσιμες σε όλη την Ελλάδα με ${shipMethods().map(m=>esc(m.name)).join(' ή ')}, από ${eur(minShip())}. Δωρεάν για αγορές άνω των ${eur(S().freeShipping??69)}${S().payments&&S().payments.cod?' · Δυνατότητα αντικαταβολής':''}.</p></details>
    <details><summary>Επιστροφές & αλλαγές</summary><p>Επιστροφή ή αλλαγή μέσα σε 14 ημέρες από την παραλαβή, αφόρετο και με τις ετικέτες του.</p></details>
    <details><summary>Φροντίδα</summary><p>Πλύσιμο στο χέρι ή σε πρόγραμμα για ευαίσθητα, σε κρύο νερό. Στέγνωμα σε σκιά.</p></details></div>
    ${rel.length?`<div class="ctl"><h4>Ολοκληρώστε το look</h4><div class="mini-rail">${rel.map(x=>`<button class="mini" data-pd="${esc(x.id)}"><img src="${esc(x.images[0])}" alt="" loading="lazy"><b>${esc(x.name)}</b><span class="price">${priceHTML(x)}</span></button>`).join('')}</div></div>`:''}`;
@@ -1306,9 +1326,9 @@ let coStep=0, payMode='card', demoDone=false, cust=store.get('mk_cust',{});
 function renderCart(){
   const body=$('#cartBody'), foot=$('#cartFoot'), s=S(), L=lines();
   const pay=s.payments||{mode:'checkout',card:true,cod:true};
-  if(coStep===3){$('#cartTitle').textContent=demoDone?'Δοκιμή':'Ευχαριστούμε';body.innerHTML=`<div class="done"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke-opacity=".25"/><path d="M20 33l8 8 16-17"/></svg><div class="serif" style="font-size:32px">${demoDone?'Δοκιμαστική παραγγελία':'Η παραγγελία σας καταχωρήθηκε'}</div><p style="color:var(--mocha);margin:10px auto 0;max-width:34ch">${demoDone?'Αυτή ήταν δοκιμή: δεν στάλθηκε παραγγελία και δεν έγινε καμία χρέωση. Οι παραγγελίες ανοίγουν μόλις συνδεθούν οι πληρωμές του καταστήματος.':'Θα λάβετε email επιβεβαίωσης με όλες τις λεπτομέρειες. Ευχαριστούμε που διαλέξατε τη MIKAERAS.'}</p></div>`;foot.innerHTML=`<button class="btn btn-dark w" data-close>Συνέχεια αγορών</button>`;return}
+  if(coStep===3){$('#cartTitle').textContent=demoDone?'Δοκιμή':'Ευχαριστούμε';body.innerHTML=`<div class="done"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke-opacity=".25"/><path d="M20 33l8 8 16-17"/></svg><div class="serif" style="font-size:32px">${demoDone?'Δοκιμαστική παραγγελία':'Η παραγγελία σας καταχωρήθηκε'}</div><p style="color:var(--mocha);margin:10px auto 0;max-width:34ch">${demoDone?'Αυτή ήταν δοκιμή: δεν στάλθηκε παραγγελία και δεν έγινε καμία χρέωση. Οι παραγγελίες ανοίγουν μόλις συνδεθούν οι πληρωμές του καταστήματος.':(lastOrder&&lastOrder.pay==='iris'?'Ολοκληρώστε την πληρωμή με IRIS και θα ετοιμάσουμε αμέσως το δέμα σας.':'Θα λάβετε email επιβεβαίωσης με όλες τις λεπτομέρειες. Ευχαριστούμε που διαλέξατε τη MIKAERAS.')}</p>${lastOrder&&lastOrder.pay==='iris'?irisBox(lastOrder):''}</div>`;foot.innerHTML=`<button class="btn btn-dark w" data-close>Συνέχεια αγορών</button>`;return}
   if(!L.length){$('#cartTitle').textContent='Το καλάθι σας';body.innerHTML=`<div class="cempty"><span class="serif">Άδειο, προς το παρόν.</span>Τα αγαπημένα σας κομμάτια σας περιμένουν.<br><br><a href="#shop" class="btn btn-dark">Στη συλλογή</a></div>`+upsellHTML([]);foot.innerHTML='';return}
-  const T=totals(payMode==='cod'?'cod':'card');
+  const T=totals(payMode);
   if(coStep===0){
     $('#cartTitle').textContent=`Το καλάθι σας (${T.items})`;
     body.innerHTML=`<div class="ship">${T.ship===0?(T.freeShipCode?'<b>Δωρεάν αποστολή</b> με τον κωδικό σας.':'<b>Συγχαρητήρια!</b> Έχετε δωρεάν αποστολή.'):`Ακόμη <b>${eur(T.free-T.after)}</b> για δωρεάν αποστολή`}<div class="tr"><i style="width:${Math.min(100,T.after/T.free*100)}%"></i></div></div>
@@ -1316,32 +1336,38 @@ function renderCart(){
      ${upsellHTML(L)}
      <div class="cart-extra">${appliedCode?`<div class="applied"><span>Κωδικός <b>${esc(appliedCode.code)}</b> ${T.codeErr?'— '+esc(T.codeErr):(T.freeShipCode?'· δωρεάν αποστολή':'· −'+eur(T.codeAmt))}</span><button id="rmCode">Αφαίρεση</button></div>`:`<div class="code"><input id="codeIn" placeholder="Κωδικός έκπτωσης" autocomplete="off" autocapitalize="characters" aria-label="Κωδικός έκπτωσης"><button id="codeGo">Εφαρμογή</button></div><div class="code-msg" id="codeMsg"></div>`}
      <details class="note"${cust.note?' open':''}><summary>+ Σημείωση για την παραγγελία</summary><textarea id="noteIn" placeholder="π.χ. είναι δώρο, βάλτε κάρτα">${esc(cust.note||'')}</textarea></details></div>`;
-    foot.innerHTML=sums(T)+`<button class="btn btn-dark w" id="toCo" style="margin-top:12px;height:56px">Ολοκλήρωση αγοράς · ${eur(T.total)}</button><div class="paylogos"><span>VISA</span><span>Mastercard</span><span>Apple Pay</span><span>Google Pay</span>${pay.cod?'<span>Αντικαταβολή</span>':''}</div>`;
+    foot.innerHTML=sums(T)+`<button class="btn btn-dark w" id="toCo" style="margin-top:12px;height:56px">Ολοκλήρωση αγοράς · ${eur(T.total)}</button><div class="paylogos"><span>VISA</span><span>Mastercard</span><span>Apple Pay</span><span>Google Pay</span>${pay.iris?'<span>IRIS</span>':''}${pay.cod?'<span>Αντικαταβολή</span>':''}</div>`;
     justAdded=null;
   } else if(coStep===1){
     $('#cartTitle').textContent='Στοιχεία αποστολής';
-    if(!pay.card&&pay.cod)payMode='cod'; if(pay.card&&!pay.cod)payMode='card';
+    const opts=['card','iris','cod'].filter(k=>pay[k]); if(!opts.includes(payMode))payMode=opts[0]||'cod';
+    const sm=curShip();
     body.innerHTML=`<div class="co"><button class="back" id="coBack">← Καλάθι</button><div class="steps"><b>Καλάθι</b> › <b>Στοιχεία</b> › Πληρωμή</div>
      <div class="fld"><label for="c1">Ονοματεπώνυμο</label><input id="c1" autocomplete="name" value="${esc(cust.name||'')}"></div>
      <div class="two"><div class="fld"><label for="c2">Κινητό</label><input id="c2" type="tel" autocomplete="tel" inputmode="tel" value="${esc(cust.phone||'')}"></div><div class="fld"><label for="c3">Email</label><input id="c3" type="email" autocomplete="email" value="${esc(cust.email||'')}"></div></div>
      <div class="fld"><label for="c4">Διεύθυνση</label><input id="c4" autocomplete="street-address" value="${esc(cust.addr||'')}"></div>
      <div class="two"><div class="fld"><label for="c5">Πόλη</label><input id="c5" autocomplete="address-level2" value="${esc(cust.city||'')}"></div><div class="fld"><label for="c6">Τ.Κ.</label><input id="c6" inputmode="numeric" autocomplete="postal-code" value="${esc(cust.zip||'')}"></div></div>
+     <div class="fld"><label>Τρόπος αποστολής</label>
+     ${shipMethods().map(m=>`<label class="pay-opt"><input type="radio" name="ship" value="${esc(m.id)}" ${sm.id===m.id?'checked':''}><div><b>${esc(m.name)}</b><span>${esc(m.note||'')}${m.days?' · '+esc(m.days)+' εργάσιμες':''}</span></div><span class="pr">${T.shipFree?(+m.price?`<s>${eur(m.price)}</s>`:'')+'Δωρεάν':eur(+m.price||0)}</span></label>`).join('')}
+     <div class="fld locker${/box ?now/i.test(sm.name)||sm.id==='boxnow'?' on':''}"><label for="c7">Θυρίδα BOX NOW (προαιρετικό)</label><input id="c7" placeholder="π.χ. περιοχή ή διεύθυνση της θυρίδας που σας βολεύει" value="${esc(cust.locker||'')}"><div style="font-size:11.5px;color:var(--mocha);margin-top:6px">Αν το αφήσετε κενό, στέλνουμε στην πιο κοντινή θυρίδα στη διεύθυνσή σας. Θα λάβετε SMS με τον κωδικό παραλαβής.</div></div></div>
      <div class="fld"><label>Τρόπος πληρωμής</label>
      ${pay.card?`<label class="pay-opt"><input type="radio" name="pay" value="card" ${payMode==='card'?'checked':''}><div><b>Κάρτα · Apple Pay · Google Pay</b><span>Ασφαλής πληρωμή μέσω τράπεζας</span></div></label>`:''}
+     ${pay.iris?`<label class="pay-opt"><input type="radio" name="pay" value="iris" ${payMode==='iris'?'checked':''}><div><b><span class="iris-tag">IRIS</span>Από την εφαρμογή της τράπεζάς σας</b><span>Άμεση πληρωμή χωρίς χρεώσεις. Τα στοιχεία εμφανίζονται μόλις ολοκληρώσετε.</span></div></label>`:''}
      ${pay.cod?`<label class="pay-opt"><input type="radio" name="pay" value="cod" ${payMode==='cod'?'checked':''}><div><b>Αντικαταβολή</b><span>Πληρώνετε στον courier${pay.codFee?' · +'+eur(pay.codFee):''}</span></div></label>`:''}</div>
      ${isDraft()?'<div class="demo"><b>Δοκιμαστική έκδοση:</b> η πληρωμή με κάρτα ενεργοποιείται μόλις συνδεθεί ο λογαριασμός πληρωμών του καταστήματος. Μπορείτε να δοκιμάσετε όλη τη διαδρομή.</div>':''}</div>`;
-    foot.innerHTML=sums(T)+`<button class="btn btn-dark w" id="payGo" style="margin-top:12px;height:56px">${payMode==='cod'?'Ολοκλήρωση παραγγελίας':'Πληρωμή'} · ${eur(T.total)}</button><div class="secure"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Ασφαλής πληρωμή · κρυπτογραφημένη σύνδεση</div>`;
+    foot.innerHTML=sums(T)+`<button class="btn btn-dark w" id="payGo" style="margin-top:12px;height:56px">${payMode==='card'?'Πληρωμή':'Ολοκλήρωση παραγγελίας'} · ${eur(T.total)}</button><div class="secure"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Ασφαλής πληρωμή · κρυπτογραφημένη σύνδεση</div>`;
     $$('[name=pay]').forEach(r=>r.onchange=()=>{payMode=r.value;saveCust();renderCart()});
+    $$('[name=ship]').forEach(r=>r.onchange=()=>{shipId=r.value;store.set('mk_ship',shipId);saveCust();renderCart()});
   }
 }
-function sums(T){return `<div class="row"><span>Υποσύνολο</span><span>${T.full>T.sub?`<s style="color:var(--taupe);font-weight:400;margin-right:6px">${eur(T.full)}</s>`:''}${eur(T.sub)}</span></div>${T.auto?`<div class="row dis"><span>${esc(T.autoLabel)}</span><span>−${eur(T.auto)}</span></div>`:''}${T.codeAmt?`<div class="row dis"><span>Κωδικός ${esc(T.codeLabel)}</span><span>−${eur(T.codeAmt)}</span></div>`:''}<div class="row"><span>Αποστολή</span><span>${T.ship?eur(T.ship):'Δωρεάν'}</span></div>${T.cod?`<div class="row"><span>Αντικαταβολή</span><span>${eur(T.cod)}</span></div>`:''}<div class="row tot"><span>Σύνολο</span><span>${eur(T.total)}</span></div>${T.saved>0.009?`<div class="row dis" style="font-size:12px"><span>Κερδίζετε</span><span>${eur(T.saved)}</span></div>`:''}`}
+function sums(T){return `<div class="row"><span>Υποσύνολο</span><span>${T.full>T.sub?`<s style="color:var(--taupe);font-weight:400;margin-right:6px">${eur(T.full)}</s>`:''}${eur(T.sub)}</span></div>${T.auto?`<div class="row dis"><span>${esc(T.autoLabel)}</span><span>−${eur(T.auto)}</span></div>`:''}${T.codeAmt?`<div class="row dis"><span>Κωδικός ${esc(T.codeLabel)}</span><span>−${eur(T.codeAmt)}</span></div>`:''}<div class="row"><span>Αποστολή${coStep===1?' · '+esc(T.shipName):''}</span><span>${T.ship?eur(T.ship):'Δωρεάν'}</span></div>${T.cod?`<div class="row"><span>Αντικαταβολή</span><span>${eur(T.cod)}</span></div>`:''}<div class="row tot"><span>Σύνολο</span><span>${eur(T.total)}</span></div>${T.saved>0.009?`<div class="row dis" style="font-size:12px"><span>Κερδίζετε</span><span>${eur(T.saved)}</span></div>`:''}`}
 function upsellHTML(L){
   const ids=L.map(l=>l.id), cats=L.map(l=>l.p.category);
   const ups=P.filter(p=>!ids.includes(p.id)&&stockOf(p)>0).sort((a,b)=>(cats.includes(a.category)?1:0)-(cats.includes(b.category)?1:0)||(b.isNew?1:0)-(a.isNew?1:0)).slice(0,3);
   if(!ups.length)return'';
   return `<div class="upsell"><h4>${L.length?'Μπορεί να σας αρέσει':'Δημοφιλή τώρα'}</h4>${ups.map(p=>`<div class="up"><img src="${esc(p.images[0])}" alt="" data-pd="${esc(p.id)}"><div><b>${esc(p.name)}</b><span class="price">${priceHTML(p)}</span></div><button class="add" data-qa="${esc(p.id)}">Προσθήκη</button></div>`).join('')}</div>`;
 }
-function saveCust(){const g=id=>{const e=$('#'+id);return e?e.value.trim():undefined};const v={name:g('c1'),phone:g('c2'),email:g('c3'),addr:g('c4'),city:g('c5'),zip:g('c6')};Object.keys(v).forEach(k=>{if(v[k]!==undefined)cust[k]=v[k]});const n=$('#noteIn');if(n)cust.note=n.value;store.set('mk_cust',cust)}
+function saveCust(){const g=id=>{const e=$('#'+id);return e?e.value.trim():undefined};const v={name:g('c1'),phone:g('c2'),email:g('c3'),addr:g('c4'),city:g('c5'),zip:g('c6'),locker:g('c7')};Object.keys(v).forEach(k=>{if(v[k]!==undefined)cust[k]=v[k]});const n=$('#noteIn');if(n)cust.note=n.value;store.set('mk_cust',cust)}
 const API=()=>String(S().api||'').replace(/\/$/,'');
 const isDraft=()=>!API();
 $('#cart').addEventListener('click',async e=>{
@@ -1371,8 +1397,9 @@ async function checkout(){
   if(em&&!/^\S+@\S+\.\S+$/.test(em))bad.push('c3'); if(payMode==='card'&&!em)bad.push('c3');
   if(bad.length){bad.forEach(id=>$('#'+id).classList.add('bad'));$('#'+bad[0]).focus();toast('Συμπληρώστε τα στοιχεία που λείπουν');return}
   const btn=$('#payGo'); btn.disabled=true; const old=btn.textContent; btn.textContent='Παρακαλώ περιμένετε…';
-  const T=totals(payMode==='cod'?'cod':'card'), L=lines(), s=S(), pay=s.payments||{};
-  const order={items:L.map(l=>({id:l.id,s:l.s,q:l.q})),code:appliedCode&&appliedCode.code||'',customer:cust,pay:payMode};
+  const T=totals(payMode), L=lines(), s=S(), pay=s.payments||{};
+  const order={items:L.map(l=>({id:l.id,s:l.s,q:l.q})),code:appliedCode&&appliedCode.code||'',customer:cust,pay:payMode,ship:curShip().id};
+  const localId='MK'+Date.now().toString(36).toUpperCase().slice(-6);
   try{
     if(payMode==='card'&&pay.mode==='links'){const withLinks=L.filter(l=>l.p.stripeLink);if(L.length===1&&withLinks.length===1){let u=withLinks[0].p.stripeLink;u+=(u.includes('?')?'&':'?')+'prefilled_email='+encodeURIComponent(cust.email||'')+(order.code?'&prefilled_promo_code='+encodeURIComponent(order.code):'');location.href=u;return}}
     if(isDraft())throw{demo:1};
@@ -1383,14 +1410,23 @@ async function checkout(){
     } else {
       const r=await fetch(API()+'/.netlify/functions/order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(order)});
       const j=await r.json(); if(!r.ok)throw{msg:j.error||'Η παραγγελία δεν ολοκληρώθηκε. Δοκιμάστε ξανά.'};
-      finishOrder();
+      finishOrder(false,{id:j.orderId||localId,total:j.total??T.total,pay:payMode});
     }
   }catch(err){
-    if(err&&err.demo){setTimeout(()=>finishOrder(true),700);return}
+    if(err&&err.demo){setTimeout(()=>finishOrder(true,{id:localId,total:T.total,pay:payMode}),700);return}
     btn.disabled=false;btn.textContent=old;toast((err&&err.msg)||'Κάτι πήγε στραβά. Δοκιμάστε ξανά.');
   }
 }
-function finishOrder(demo){demoDone=!!demo;bag=[];saveBag();appliedCode=null;store.set('mk_code',null);updateCounts();coStep=3;renderCart();$('#cartBody').scrollTop=0}
+let lastOrder=null;
+function irisBox(o){const p=S().payments||{};const id=p.irisId||'(συμπληρώνεται από τον πίνακα)';
+  return `<div class="irisbox"><h4><span class="iris-tag">IRIS</span>Πώς πληρώνετε</h4><ol><li>Ανοίξτε την εφαρμογή της τράπεζάς σας και επιλέξτε <b>IRIS</b>.</li><li>Επιλέξτε <b>πληρωμή σε επιχείρηση</b> και βάλτε τα παρακάτω στοιχεία.</li><li>Γράψτε τον αριθμό παραγγελίας στην αιτιολογία.</li></ol>
+  <div class="irow"><span>${/^\d{9}$/.test(String(p.irisId||'').trim())?'ΑΦΜ':'Στοιχεία IRIS'}</span><b>${esc(id)}</b><button data-copy="${esc(p.irisId||'')}">Αντιγραφή</button></div>
+  ${p.irisName?`<div class="irow"><span>Δικαιούχος</span><b>${esc(p.irisName)}</b></div>`:''}
+  <div class="irow"><span>Ποσό</span><b>${eur(o.total)}</b><button data-copy="${(+o.total).toFixed(2).replace('.',',')}">Αντιγραφή</button></div>
+  <div class="irow"><span>Αιτιολογία</span><b>${esc(o.id)}</b><button data-copy="${esc(o.id)}">Αντιγραφή</button></div>
+  <div style="font-size:11.5px;color:var(--mocha);margin-top:10px">Η παραγγελία κρατιέται για σας 24 ώρες. Μόλις λάβουμε την πληρωμή, σας στέλνουμε email και ξεκινά η αποστολή.</div></div>`}
+document.addEventListener('click',async e=>{const c=e.target.closest('[data-copy]');if(!c||!c.dataset.copy)return;try{await navigator.clipboard.writeText(c.dataset.copy);toast('Αντιγράφηκε')}catch(err){toast(c.dataset.copy)}});
+function finishOrder(demo,o){demoDone=!!demo;lastOrder=o||null;bag=[];saveBag();appliedCode=null;store.set('mk_code',null);updateCounts();coStep=3;renderCart();$('#cartBody').scrollTop=0}
 function openCart(){coStep=coStep===3?0:coStep;renderCart();openP('cart')}
 $('#bagBtn').onclick=openCart; $('#fab').onclick=openCart;
 
@@ -1409,11 +1445,11 @@ $('#bagBtn').onclick=openCart; $('#fab').onclick=openCart;
 
 /* ---------- legal ---------- */
 const LEGAL={
- shipping:['Αποστολές',()=>`<p>Αποστέλλουμε σε όλη την Ελλάδα μέσω συνεργαζόμενης εταιρείας courier. Οι παραγγελίες φεύγουν μέσα σε 1–2 εργάσιμες και παραδίδονται συνήθως σε 1–3 εργάσιμες.</p><p>Η αποστολή είναι δωρεάν για αγορές άνω των ${eur(S().freeShipping??69)}. Για μικρότερες παραγγελίες κοστίζει ${eur(S().shippingCost??4)}${S().payments&&S().payments.cod&&S().payments.codFee?` και η αντικαταβολή επιβαρύνεται με ${eur(S().payments.codFee)}`:''}.</p>`],
+ shipping:['Αποστολές',()=>`<p>Αποστέλλουμε σε όλη την Ελλάδα. Διαλέγετε τον τρόπο αποστολής στο καλάθι:</p><ul>${shipMethods().map(m=>`<li><b>${esc(m.name)}</b> — ${esc(m.note||'')}${m.days?', '+esc(m.days)+' εργάσιμες':''}, ${eur(+m.price||0)}</li>`).join('')}</ul><p>Η αποστολή είναι δωρεάν για αγορές άνω των ${eur(S().freeShipping??69)}${S().payments&&S().payments.cod&&S().payments.codFee?` και η αντικαταβολή επιβαρύνεται με ${eur(S().payments.codFee)}`:''}.</p>`],
  returns:['Επιστροφές & αλλαγές',()=>`<p>Έχετε δικαίωμα υπαναχώρησης μέσα σε 14 ημέρες από την παραλαβή, χωρίς να χρειάζεται αιτιολογία.</p><ul><li>Το προϊόν πρέπει να είναι αφόρετο, στην αρχική του κατάσταση, με τις ετικέτες του.</li><li>Στείλτε μας email στο ${esc(S().email||'mikaerasproject@gmail.com')} με τον αριθμό της παραγγελίας σας.</li><li>Η επιστροφή των χρημάτων γίνεται με τον ίδιο τρόπο πληρωμής, μέσα σε 14 ημέρες από τη στιγμή που θα παραλάβουμε το προϊόν.</li><li>Τα έξοδα επιστροφής βαρύνουν τον πελάτη, εκτός αν το προϊόν είναι ελαττωματικό ή λάθος.</li></ul>`],
  sizes:['Οδηγός μεγεθών',()=>`<p>Ενδεικτικές μετρήσεις σώματος σε εκατοστά.</p><ul><li><b>XS</b> — στήθος 78–82 · μέση 60–64 · περιφέρεια 86–90</li><li><b>S</b> — στήθος 82–86 · μέση 64–68 · περιφέρεια 90–94</li><li><b>M</b> — στήθος 87–91 · μέση 69–73 · περιφέρεια 95–99</li><li><b>L</b> — στήθος 92–96 · μέση 74–78 · περιφέρεια 100–104</li><li><b>XL</b> — στήθος 97–102 · μέση 79–84 · περιφέρεια 105–110</li></ul><p>Δεν είστε σίγουρη; Στείλτε μας μήνυμα στο Instagram και θα σας βοηθήσουμε να διαλέξετε.</p>`],
- terms:['Όροι χρήσης',()=>`<p>Το κατάστημα MIKAERAS λειτουργεί σύμφωνα με την ελληνική και ευρωπαϊκή νομοθεσία για το ηλεκτρονικό εμπόριο και την προστασία του καταναλωτή.</p><h3>Στοιχεία επιχείρησης</h3><p>${esc(S().legal||'MIKAERAS · ' +(S().email||'mikaerasproject@gmail.com'))}</p><h3>Τιμές</h3><p>Όλες οι τιμές είναι σε ευρώ και περιλαμβάνουν ΦΠΑ. Το κόστος αποστολής ή αντικαταβολής εμφανίζεται πριν την ολοκλήρωση της παραγγελίας.</p><h3>Εκπτώσεις</h3><p>Οι κωδικοί έκπτωσης ισχύουν για το διάστημα και τους όρους που αναφέρονται. Οι προσφορές ισχύουν μέχρι εξαντλήσεως των τεμαχίων.</p><h3>Διαθεσιμότητα</h3><p>Τα κομμάτια μας κυκλοφορούν σε περιορισμένα τεμάχια. Αν ένα προϊόν εξαντληθεί αφού υποβάλετε την παραγγελία, θα επικοινωνήσουμε μαζί σας και θα επιστρέψουμε άμεσα όλο το ποσό.</p>`],
- privacy:['Απόρρητο & cookies',()=>`<p>Σεβόμαστε τα προσωπικά σας δεδομένα σύμφωνα με τον Γενικό Κανονισμό Προστασίας Δεδομένων (GDPR).</p><h3>Τι συλλέγουμε</h3><p>Μόνο όσα χρειάζονται για να σας στείλουμε την παραγγελία: όνομα, τηλέφωνο, email και διεύθυνση.</p><h3>Με ποιους τα μοιραζόμαστε</h3><p>Με τον πάροχο πληρωμών (για την ασφαλή χρέωση της κάρτας), την εταιρεία courier (για την παράδοση) και τον πάροχο φιλοξενίας (hosting) της ιστοσελίδας. Ποτέ για διαφήμιση τρίτων.</p><h3>Cookies</h3><p>Η σελίδα δεν χρησιμοποιεί cookies παρακολούθησης. Αποθηκεύει μόνο στη συσκευή σας το καλάθι, τα αγαπημένα και όσα είδατε πρόσφατα, ώστε να μη χαθούν. Οι γραμματοσειρές και οι εικόνες φορτώνουν από τον δικό μας χώρο.</p><h3>Τα δικαιώματά σας</h3><p>Μπορείτε να ζητήσετε πρόσβαση, διόρθωση ή διαγραφή των δεδομένων σας στο ${esc(S().email||'mikaerasproject@gmail.com')}.</p>`]
+ terms:['Όροι χρήσης',()=>`<p>Το κατάστημα MIKAERAS λειτουργεί σύμφωνα με την ελληνική και ευρωπαϊκή νομοθεσία για το ηλεκτρονικό εμπόριο και την προστασία του καταναλωτή.</p><h3>Στοιχεία επιχείρησης</h3><p>${esc(S().legal||'MIKAERAS · ' +(S().email||'mikaerasproject@gmail.com'))}</p><h3>Τιμές</h3><p>Όλες οι τιμές είναι σε ευρώ και περιλαμβάνουν ΦΠΑ. Το κόστος αποστολής ή αντικαταβολής εμφανίζεται πριν την ολοκλήρωση της παραγγελίας.</p><h3>Τρόποι πληρωμής</h3><p>${[(S().payments||{}).card?'κάρτα (και Apple Pay / Google Pay)':'',(S().payments||{}).iris?'άμεση πληρωμή IRIS από την εφαρμογή της τράπεζάς σας':'',(S().payments||{}).cod?'αντικαταβολή':''].filter(Boolean).join(', ')}. Με IRIS η παραγγελία κρατιέται 24 ώρες και αποστέλλεται μόλις λάβουμε την πληρωμή.</p><h3>Εκπτώσεις</h3><p>Οι κωδικοί έκπτωσης ισχύουν για το διάστημα και τους όρους που αναφέρονται. Οι προσφορές ισχύουν μέχρι εξαντλήσεως των τεμαχίων.</p><h3>Διαθεσιμότητα</h3><p>Τα κομμάτια μας κυκλοφορούν σε περιορισμένα τεμάχια. Αν ένα προϊόν εξαντληθεί αφού υποβάλετε την παραγγελία, θα επικοινωνήσουμε μαζί σας και θα επιστρέψουμε άμεσα όλο το ποσό.</p>`],
+ privacy:['Απόρρητο & cookies',()=>`<p>Σεβόμαστε τα προσωπικά σας δεδομένα σύμφωνα με τον Γενικό Κανονισμό Προστασίας Δεδομένων (GDPR).</p><h3>Τι συλλέγουμε</h3><p>Μόνο όσα χρειάζονται για να σας στείλουμε την παραγγελία: όνομα, τηλέφωνο, email και διεύθυνση.</p><h3>Με ποιους τα μοιραζόμαστε</h3><p>Με τον πάροχο πληρωμών και την τράπεζα (για την ασφαλή πληρωμή), την εταιρεία courier (για την παράδοση) και τον πάροχο φιλοξενίας (hosting) της ιστοσελίδας. Ποτέ για διαφήμιση τρίτων.</p><h3>Cookies</h3><p>Η σελίδα δεν χρησιμοποιεί cookies παρακολούθησης. Αποθηκεύει μόνο στη συσκευή σας το καλάθι, τα αγαπημένα και όσα είδατε πρόσφατα, ώστε να μη χαθούν. Οι γραμματοσειρές και οι εικόνες φορτώνουν από τον δικό μας χώρο.</p><h3>Τα δικαιώματά σας</h3><p>Μπορείτε να ζητήσετε πρόσβαση, διόρθωση ή διαγραφή των δεδομένων σας στο ${esc(S().email||'mikaerasproject@gmail.com')}.</p>`]
 };
 function openLegal(k){const d=LEGAL[k];if(!d)return;$('#legalBody').innerHTML=`<h2>${d[0]}</h2>${d[1]()}`;$('#legalBody').scrollTop=0;openP('legal')}
 

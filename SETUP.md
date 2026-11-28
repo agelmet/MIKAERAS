@@ -19,3 +19,7 @@ GitHub → Settings → Developer settings → Fine-grained token → only this 
 - Discount codes are stored as slow salted hashes (PBKDF2). The shop page, the admin and `api/lib/shop.mjs` must use the same function.
 - The admin reads the newest `products.json` straight from the repo once the publishing key is set, and keeps unpublished photos in the phone's IndexedDB.
 - The admin can be added to the phone's home screen (`admin.webmanifest`).
+
+## Shipping & IRIS (v5)
+- Shipping methods live in `settings.shippingMethods` (BOX NOW, FedEx, 2,99€, 2–5 days); editable in Admin → Ρυθμίσεις. Free over `freeShipping`.
+- IRIS (mandatory for B2C since 1 Dec 2025): customer pays from their bank app to the shop's IRIS ID (ΑΦΜ/κινητό, set in Admin → Ρυθμίσεις → Πληρωμές). The order arrives by e-mail as "αναμονή πληρωμής" with an order number used as the payment reference; the owner ships once the money is in.
